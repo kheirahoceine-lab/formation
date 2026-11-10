@@ -33,10 +33,33 @@ export async function applyForInfluencer() {
 }
 
 export async function requestPayout(influencerId: string, formData: FormData) {
-  const { supabase } = await requireUser();
+  const { supabase, user } = await requireUser();
 
   const amount = Number(formData.get("amount_requested") ?? 0);
   const bankInfo = String(formData.get("bank_info") ?? "").trim();
+
+  const { data: influencer } = await supabase
+    .from("influencers")
+    .select("id")
+    .eq("id", influencerId)
+    .eq("user_id", user.id)
+    .single();
+  if (!influencer) return;
+
+  const { data: commissions } = await supabase
+    .from("commissions")
+    .select("amount_da")
+    .eq("influencer_id", influencerId);
+  const { data: payouts } = await supabase
+    .from("payout_requests")
+    .select("amount_requested, status")
+    .eq("influencer_id", influencerId);
+
+  const totalEarned = (commissions ?? []).reduce((sum, c) => sum + c.amount_da, 0);
+  const alreadyClaimed = (payouts ?? []).reduce((sum, p) => sum + p.amount_requested, 0);
+  const availableBalance = totalEarned - alreadyClaimed;
+
+  if (!amount || amount <= 0 || amount > availableBalance) return;
 
   await supabase.from("payout_requests").insert({
     influencer_id: influencerId,

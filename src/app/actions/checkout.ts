@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { requireUser } from "@/lib/auth";
+import { validateImage, safeFileName } from "@/lib/validateFile";
 import type { Course, PaymentMethod } from "@/lib/types";
 
 async function resolveReferrer(
@@ -68,7 +69,12 @@ export async function submitPayment(courseSlug: string, formData: FormData) {
     redirect(`/checkout/${slugPath}?error=${encodeURIComponent("خاصك ترفعي صورة الوصل")}`);
   }
 
-  const path = `${user.id}/${course.id}-${Date.now()}-${receipt.name}`;
+  const imageError = validateImage(receipt);
+  if (imageError) {
+    redirect(`/checkout/${slugPath}?error=${encodeURIComponent(imageError)}`);
+  }
+
+  const path = `${user.id}/${course.id}-${Date.now()}-${safeFileName(receipt.name)}`;
   const { error: uploadError } = await supabase.storage
     .from("payment-receipts")
     .upload(path, receipt);

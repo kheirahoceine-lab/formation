@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { slugify } from "@/lib/slug";
+import { validateImage, validateLessonFile, safeFileName } from "@/lib/validateFile";
 
 async function uploadCoverImage(
   supabase: Awaited<ReturnType<typeof requireAdmin>>["supabase"],
@@ -11,6 +12,8 @@ async function uploadCoverImage(
   file: File
 ) {
   if (!file || file.size === 0) return null;
+  const imageError = validateImage(file);
+  if (imageError) throw new Error(imageError);
   const ext = file.name.split(".").pop() ?? "jpg";
   const path = `${courseId}/cover.${ext}`;
   const { error } = await supabase.storage
@@ -144,8 +147,10 @@ export async function uploadLessonFile(
   const { supabase } = await requireAdmin();
   const file = formData.get("file") as File | null;
   if (!file || file.size === 0) return;
+  const fileError = validateLessonFile(file);
+  if (fileError) throw new Error(fileError);
 
-  const path = `${courseId}/${lessonId}/${Date.now()}-${file.name}`;
+  const path = `${courseId}/${lessonId}/${Date.now()}-${safeFileName(file.name)}`;
   const { error } = await supabase.storage
     .from("lesson-files")
     .upload(path, file);

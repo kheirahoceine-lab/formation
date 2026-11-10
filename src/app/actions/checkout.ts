@@ -1,8 +1,30 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { requireUser } from "@/lib/auth";
 import type { Course, PaymentMethod } from "@/lib/types";
+
+async function resolveReferrer(
+  supabase: Awaited<ReturnType<typeof requireUser>>["supabase"],
+  formData: FormData,
+  currentUserId: string
+) {
+  const manualCode = String(formData.get("promo_code") ?? "").trim();
+  const cookieCode = (await cookies()).get("ref_code")?.value ?? "";
+  const code = manualCode || cookieCode;
+  if (!code) return null;
+
+  const { data: influencer } = await supabase
+    .from("influencers")
+    .select("user_id")
+    .eq("promo_code", code)
+    .eq("status", "approved")
+    .maybeSingle();
+
+  if (!influencer || influencer.user_id === currentUserId) return null;
+  return influencer.user_id;
+}
 
 export async function submitPayment(courseSlug: string, formData: FormData) {
   const { supabase, user } = await requireUser();
@@ -29,9 +51,10 @@ export async function submitPayment(courseSlug: string, formData: FormData) {
 
   let enrollmentId = existing?.id;
   if (!enrollmentId) {
+    const referredBy = await resolveReferrer(supabase, formData, user.id);
     const { data: enrollment, error } = await supabase
       .from("enrollments")
-      .insert({ student_id: user.id, course_id: course.id })
+      .insert({ student_id: user.id, course_id: course.id, referred_by: referredBy })
       .select("id")
       .single();
     if (error) redirect(`/checkout/${slugPath}?error=${encodeURIComponent(error.message)}`);

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import type { Course } from "@/lib/types";
 import { submitPayment } from "@/app/actions/checkout";
@@ -38,6 +39,7 @@ export default async function CheckoutPage({
   }
 
   const submitPaymentForCourse = submitPayment.bind(null, slug);
+  const refCode = (await cookies()).get("ref_code")?.value ?? "";
 
   return (
     <div className="mx-auto max-w-lg px-4 py-12">
@@ -110,6 +112,16 @@ export default async function CheckoutPage({
           <div>
             <label className="mb-1 block text-sm">صورة وصل الدفع</label>
             <input name="receipt" type="file" accept="image/*" required />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm">كود برومو (اختياري)</label>
+            <input
+              name="promo_code"
+              defaultValue={refCode}
+              dir="ltr"
+              className="w-full rounded-lg border border-neutral-300 px-3 py-2"
+            />
           </div>
 
           <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">

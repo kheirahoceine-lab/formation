@@ -14,6 +14,12 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
         <Link href="/admin/payments" className="hover:text-neutral-600">
           الدفعات
         </Link>
+        <Link href="/admin/influencers" className="hover:text-neutral-600">
+          الإنفلونسرز
+        </Link>
+        <Link href="/admin/payouts" className="hover:text-neutral-600">
+          السحوبات
+        </Link>
       </nav>
       {children}
     </div>

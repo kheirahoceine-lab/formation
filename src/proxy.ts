@@ -28,6 +28,25 @@ export async function proxy(request: NextRequest) {
   // يحدّث جلسة تسجيل الدخول فـ cookies قبل ما تدخل الصفحة
   await supabase.auth.getUser();
 
+  // تتبع رابط الإنفلونسر: ?ref=CODE
+  const ref = request.nextUrl.searchParams.get("ref");
+  if (ref) {
+    const { data: influencer } = await supabase
+      .from("influencers")
+      .select("id")
+      .eq("promo_code", ref)
+      .eq("status", "approved")
+      .maybeSingle();
+
+    if (influencer) {
+      await supabase.from("referral_visits").insert({ influencer_id: influencer.id });
+      response.cookies.set("ref_code", ref, {
+        maxAge: 60 * 60 * 24 * 30,
+        path: "/",
+      });
+    }
+  }
+
   return response;
 }
 

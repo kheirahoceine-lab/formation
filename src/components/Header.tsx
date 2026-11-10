@@ -8,6 +8,7 @@ export default async function Header() {
   const user = data.user;
 
   let dashboardHref = "/dashboard";
+  let isStudent = false;
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -16,6 +17,7 @@ export default async function Header() {
       .single();
     if (profile?.role === "admin") dashboardHref = "/admin";
     else if (profile?.role === "influencer") dashboardHref = "/influencer";
+    else isStudent = true;
   }
 
   return (
@@ -33,6 +35,11 @@ export default async function Header() {
               <Link href={dashboardHref} className="hover:text-neutral-600">
                 لوحتي
               </Link>
+              {isStudent && (
+                <Link href="/influencer" className="hover:text-neutral-600">
+                  كوني إنفلونسر
+                </Link>
+              )}
               <form action={logout}>
                 <button className="rounded-lg bg-neutral-100 px-3 py-1.5 hover:bg-neutral-200">
                   تسجيل الخروج

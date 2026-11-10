@@ -175,19 +175,46 @@ export async function deleteLessonFile(
 export async function confirmPayment(paymentId: string, enrollmentId: string) {
   const { supabase, user } = await requireAdmin();
 
-  await supabase
+  const { data: payment } = await supabase
     .from("payments")
     .update({
       status: "confirmed",
       reviewed_by: user.id,
       reviewed_at: new Date().toISOString(),
     })
-    .eq("id", paymentId);
+    .eq("id", paymentId)
+    .select("amount_da")
+    .single();
 
-  await supabase
+  const { data: enrollment } = await supabase
     .from("enrollments")
     .update({ status: "active" })
-    .eq("id", enrollmentId);
+    .eq("id", enrollmentId)
+    .select("referred_by")
+    .single();
+
+  if (enrollment?.referred_by && payment) {
+    const { data: influencer } = await supabase
+      .from("influencers")
+      .select("id, commission_type, commission_value")
+      .eq("user_id", enrollment.referred_by)
+      .eq("status", "approved")
+      .maybeSingle();
+
+    if (influencer) {
+      const commissionAmount =
+        influencer.commission_type === "percent"
+          ? Math.round((payment.amount_da * influencer.commission_value) / 100)
+          : influencer.commission_value;
+
+      await supabase.from("commissions").insert({
+        influencer_id: influencer.id,
+        enrollment_id: enrollmentId,
+        payment_id: paymentId,
+        amount_da: commissionAmount,
+      });
+    }
+  }
 
   revalidatePath("/admin/payments");
 }
@@ -210,4 +237,54 @@ export async function rejectPayment(paymentId: string, enrollmentId: string) {
     .eq("id", enrollmentId);
 
   revalidatePath("/admin/payments");
+}
+
+export async function approveInfluencer(influencerId: string, formData: FormData) {
+  const { supabase } = await requireAdmin();
+
+  const commission_type = String(formData.get("commission_type") ?? "percent");
+  const commission_value = Number(formData.get("commission_value") ?? 0);
+
+  const { data: influencer } = await supabase
+    .from("influencers")
+    .update({ status: "approved", commission_type, commission_value })
+    .eq("id", influencerId)
+    .select("user_id")
+    .single();
+
+  if (influencer) {
+    await supabase
+      .from("profiles")
+      .update({ role: "influencer" })
+      .eq("id", influencer.user_id);
+  }
+
+  revalidatePath("/admin/influencers");
+}
+
+export async function rejectInfluencer(influencerId: string) {
+  const { supabase } = await requireAdmin();
+  await supabase
+    .from("influencers")
+    .update({ status: "rejected" })
+    .eq("id", influencerId);
+  revalidatePath("/admin/influencers");
+}
+
+export async function approvePayout(payoutId: string) {
+  const { supabase } = await requireAdmin();
+  await supabase
+    .from("payout_requests")
+    .update({ status: "approved" })
+    .eq("id", payoutId);
+  revalidatePath("/admin/payouts");
+}
+
+export async function markPayoutPaid(payoutId: string) {
+  const { supabase } = await requireAdmin();
+  await supabase
+    .from("payout_requests")
+    .update({ status: "paid", processed_at: new Date().toISOString() })
+    .eq("id", payoutId);
+  revalidatePath("/admin/payouts");
 }

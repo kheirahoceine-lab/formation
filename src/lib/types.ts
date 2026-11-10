@@ -63,3 +63,41 @@ export type Payment = {
   reviewed_at: string | null;
   created_at: string;
 };
+
+export type CommissionType = "percent" | "fixed";
+export type InfluencerStatus = "pending" | "approved" | "rejected";
+
+export type Influencer = {
+  id: string;
+  user_id: string;
+  promo_code: string;
+  referral_slug: string;
+  commission_type: CommissionType;
+  commission_value: number;
+  status: InfluencerStatus;
+  created_at: string;
+};
+
+export type CommissionStatus = "pending" | "paid";
+
+export type Commission = {
+  id: string;
+  influencer_id: string;
+  enrollment_id: string;
+  payment_id: string;
+  amount_da: number;
+  status: CommissionStatus;
+  created_at: string;
+};
+
+export type PayoutStatus = "pending" | "approved" | "paid";
+
+export type PayoutRequest = {
+  id: string;
+  influencer_id: string;
+  amount_requested: number;
+  status: PayoutStatus;
+  bank_info: string | null;
+  requested_at: string;
+  processed_at: string | null;
+};

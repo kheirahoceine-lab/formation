@@ -92,6 +92,14 @@ export type Commission = {
 
 export type PayoutStatus = "pending" | "approved" | "paid";
 
+export type LiveSession = {
+  id: string;
+  course_id: string;
+  title: string;
+  meeting_link: string;
+  scheduled_at: string;
+};
+
 export type PayoutRequest = {
   id: string;
   influencer_id: string;

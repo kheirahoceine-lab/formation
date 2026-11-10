@@ -288,3 +288,26 @@ export async function markPayoutPaid(payoutId: string) {
     .eq("id", payoutId);
   revalidatePath("/admin/payouts");
 }
+
+export async function createLiveSession(courseId: string, formData: FormData) {
+  const { supabase } = await requireAdmin();
+
+  const title = String(formData.get("title") ?? "").trim();
+  const meeting_link = String(formData.get("meeting_link") ?? "").trim();
+  const scheduled_at = String(formData.get("scheduled_at") ?? "");
+
+  await supabase.from("live_sessions").insert({
+    course_id: courseId,
+    title,
+    meeting_link,
+    scheduled_at: scheduled_at ? new Date(scheduled_at).toISOString() : null,
+  });
+
+  revalidatePath(`/admin/courses/${courseId}`);
+}
+
+export async function deleteLiveSession(courseId: string, sessionId: string) {
+  const { supabase } = await requireAdmin();
+  await supabase.from("live_sessions").delete().eq("id", sessionId);
+  revalidatePath(`/admin/courses/${courseId}`);
+}

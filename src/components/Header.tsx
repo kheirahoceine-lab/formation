@@ -22,11 +22,11 @@ export default async function Header() {
 
   return (
     <header className="border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
         <Link href="/" className="text-lg font-bold text-neutral-900">
           منصة الدورات
         </Link>
-        <nav className="flex items-center gap-4 text-sm">
+        <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
           <Link href="/" className="hover:text-neutral-600">
             الدورات
           </Link>

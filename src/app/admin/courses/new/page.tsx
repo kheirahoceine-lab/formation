@@ -63,7 +63,7 @@ export default async function NewCoursePage({
           <input name="is_published" type="checkbox" />
           نشر الدورة مباشرة (تبان فالكاتالوغ)
         </label>
-        <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">
+        <button className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
           إنشاء الدورة
         </button>
       </form>

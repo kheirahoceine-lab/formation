@@ -53,7 +53,7 @@ export default async function DashboardPage() {
             {e.status === "active" && e.courses && (
               <Link
                 href={`/dashboard/courses/${e.courses.slug}`}
-                className="rounded-lg bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700"
+                className="rounded-lg bg-brand px-4 py-2 text-sm text-white hover:bg-brand-dark"
               >
                 تابعي الدورة
               </Link>

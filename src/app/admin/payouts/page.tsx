@@ -56,7 +56,7 @@ export default async function AdminPayoutsPage() {
               <div className="flex gap-2">
                 {p.status === "pending" && (
                   <form action={approveBound}>
-                    <button className="rounded-lg bg-neutral-900 px-3 py-1.5 text-sm text-white hover:bg-neutral-700">
+                    <button className="rounded-lg bg-brand px-3 py-1.5 text-sm text-white hover:bg-brand-dark">
                       موافقة
                     </button>
                   </form>

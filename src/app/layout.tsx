@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ar" dir="rtl" className={`${tajawal.variable} h-full`}>
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-tajawal)] bg-neutral-50 text-neutral-900">
+      <body className="min-h-full flex flex-col font-[family-name:var(--font-tajawal)] bg-paper text-ink">
         <Header />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-neutral-200 py-6 text-center text-sm text-neutral-500">

@@ -53,7 +53,7 @@ export default async function CheckoutPage({
           <p className="mb-4 text-neutral-700">لازم تدخلي لحسابك قبل الشراء.</p>
           <Link
             href="/login"
-            className="rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white hover:bg-neutral-700"
+            className="rounded-lg bg-brand px-5 py-2.5 font-medium text-white hover:bg-brand-dark"
           >
             تسجيل الدخول
           </Link>
@@ -124,7 +124,7 @@ export default async function CheckoutPage({
             />
           </div>
 
-          <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">
+          <button className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
             إرسال الوصل
           </button>
         </form>

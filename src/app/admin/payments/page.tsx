@@ -76,7 +76,7 @@ export default async function AdminPaymentsPage() {
                   <a
                     href={p.signedUrl}
                     target="_blank"
-                    className="text-sm font-medium text-neutral-900 underline"
+                    className="text-sm font-medium text-ink underline"
                   >
                     شوفي الوصل
                   </a>

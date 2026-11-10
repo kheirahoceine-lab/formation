@@ -103,7 +103,7 @@ export default async function EditCoursePage({
             />
             منشورة (تبان فالكاتالوغ)
           </label>
-          <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">
+          <button className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
             حفظ التعديلات
           </button>
         </form>
@@ -114,7 +114,7 @@ export default async function EditCoursePage({
           <h2 className="text-lg font-bold">الدروس</h2>
           <Link
             href={`/admin/courses/${id}/lessons/new`}
-            className="rounded-lg bg-neutral-900 px-3 py-1.5 text-sm text-white hover:bg-neutral-700"
+            className="rounded-lg bg-brand px-3 py-1.5 text-sm text-white hover:bg-brand-dark"
           >
             + درس جديد
           </Link>
@@ -176,7 +176,7 @@ export default async function EditCoursePage({
               className="rounded-lg border border-neutral-300 px-3 py-2 text-sm"
             />
           </div>
-          <button className="rounded-lg bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700">
+          <button className="rounded-lg bg-brand px-4 py-2 text-sm text-white hover:bg-brand-dark">
             إضافة
           </button>
         </form>

@@ -19,7 +19,7 @@ export default function CopyButton({ text }: { text: string }) {
     <button
       onClick={copy}
       type="button"
-      className="rounded-lg bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700"
+      className="rounded-lg bg-brand px-4 py-2 text-sm text-white hover:bg-brand-dark"
     >
       {copied ? "تم النسخ ✓" : "نسخ الرابط"}
     </button>

@@ -34,7 +34,7 @@ export default async function CoursePage({
         )}
       </div>
 
-      <h1 className="mt-6 mb-2 text-3xl font-bold text-neutral-900">
+      <h1 className="mt-6 mb-2 text-3xl font-bold text-ink">
         {course.title}
       </h1>
       <p className="mb-6 whitespace-pre-line text-neutral-700">
@@ -42,12 +42,12 @@ export default async function CoursePage({
       </p>
 
       <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-5">
-        <span className="text-2xl font-bold text-neutral-900">
+        <span className="text-2xl font-bold text-ink">
           {course.price_da.toLocaleString("ar-DZ")} دج
         </span>
         <Link
           href={`/checkout/${course.slug}`}
-          className="rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white hover:bg-neutral-700"
+          className="rounded-lg bg-brand px-5 py-2.5 font-medium text-white hover:bg-brand-dark"
         >
           اشتري الدورة
         </Link>

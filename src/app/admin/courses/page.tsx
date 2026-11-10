@@ -18,7 +18,7 @@ export default async function AdminCoursesPage() {
         <h2 className="text-lg font-bold">الدورات</h2>
         <Link
           href="/admin/courses/new"
-          className="rounded-lg bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700"
+          className="rounded-lg bg-brand px-4 py-2 text-sm text-white hover:bg-brand-dark"
         >
           + دورة جديدة
         </Link>

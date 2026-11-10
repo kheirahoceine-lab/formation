@@ -41,7 +41,7 @@ export default async function NewLessonPage({
           <input name="is_free_preview" type="checkbox" />
           بريفيو مجاني (يبان بلا شراء)
         </label>
-        <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">
+        <button className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
           إنشاء الدرس
         </button>
       </form>

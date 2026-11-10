@@ -24,7 +24,7 @@ export default async function InfluencerPage() {
           الأدمين يراجع طلبك ويحدد نسبة العمولة تاعك.
         </p>
         <form action={applyForInfluencer}>
-          <button className="rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white hover:bg-neutral-700">
+          <button className="rounded-lg bg-brand px-5 py-2.5 font-medium text-white hover:bg-brand-dark">
             اطلبي الانضمام
           </button>
         </form>
@@ -138,7 +138,7 @@ export default async function InfluencerPage() {
               className="w-full rounded-lg border border-neutral-300 px-3 py-2"
             />
           </div>
-          <button className="rounded-lg bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700">
+          <button className="rounded-lg bg-brand px-4 py-2 text-sm text-white hover:bg-brand-dark">
             طلب السحب
           </button>
         </form>
@@ -180,7 +180,7 @@ export default async function InfluencerPage() {
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-center">
-      <p className="text-xl font-bold text-neutral-900">{value}</p>
+      <p className="text-xl font-bold text-ink">{value}</p>
       <p className="text-sm text-neutral-500">{label}</p>
     </div>
   );

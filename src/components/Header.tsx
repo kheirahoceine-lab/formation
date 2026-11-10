@@ -23,20 +23,21 @@ export default async function Header() {
   return (
     <header className="border-b border-neutral-200 bg-white">
       <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-        <Link href="/" className="text-lg font-bold text-neutral-900">
+        <Link href="/" className="flex items-center gap-2 text-lg font-bold text-ink">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-brand" />
           منصة الدورات
         </Link>
         <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-          <Link href="/" className="hover:text-neutral-600">
+          <Link href="/" className="hover:text-brand transition-colors">
             الدورات
           </Link>
           {user ? (
             <>
-              <Link href={dashboardHref} className="hover:text-neutral-600">
+              <Link href={dashboardHref} className="hover:text-brand transition-colors">
                 لوحتي
               </Link>
               {isStudent && (
-                <Link href="/influencer" className="hover:text-neutral-600">
+                <Link href="/influencer" className="hover:text-brand transition-colors">
                   كوني إنفلونسر
                 </Link>
               )}
@@ -48,12 +49,12 @@ export default async function Header() {
             </>
           ) : (
             <>
-              <Link href="/login" className="hover:text-neutral-600">
+              <Link href="/login" className="hover:text-brand transition-colors">
                 تسجيل الدخول
               </Link>
               <Link
                 href="/signup"
-                className="rounded-lg bg-neutral-900 px-3 py-1.5 text-white hover:bg-neutral-700"
+                className="rounded-lg bg-brand px-3 py-1.5 text-white hover:bg-brand-dark"
               >
                 إنشاء حساب
               </Link>

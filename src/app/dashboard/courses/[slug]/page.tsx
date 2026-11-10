@@ -77,7 +77,7 @@ export default async function CourseLearnPage({
                     {new Date(session.scheduled_at).toLocaleString("ar-DZ")}
                   </p>
                 </div>
-                <span className="rounded-lg bg-neutral-900 px-3 py-1.5 text-sm text-white">
+                <span className="rounded-lg bg-brand px-3 py-1.5 text-sm text-white">
                   الدخول للحصة
                 </span>
               </a>

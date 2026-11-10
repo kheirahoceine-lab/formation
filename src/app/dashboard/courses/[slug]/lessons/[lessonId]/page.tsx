@@ -117,7 +117,7 @@ export default async function LessonPage({
           className={`rounded-lg px-4 py-2 text-sm font-medium ${
             isCompleted
               ? "bg-neutral-100 text-neutral-700"
-              : "bg-neutral-900 text-white hover:bg-neutral-700"
+              : "bg-brand text-white hover:bg-brand-dark"
           }`}
         >
           {isCompleted ? "✓ تم إكمال الدرس (دوسي للإلغاء)" : "علّم الدرس كمكتمل"}

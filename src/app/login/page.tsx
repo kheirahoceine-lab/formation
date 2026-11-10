@@ -35,14 +35,14 @@ export default async function LoginPage({
             className="w-full rounded-lg border border-neutral-300 px-3 py-2"
           />
         </div>
-        <button className="rounded-lg bg-neutral-900 px-4 py-2 text-white hover:bg-neutral-700">
+        <button className="rounded-lg bg-brand px-4 py-2 text-white hover:bg-brand-dark">
           دخول
         </button>
       </form>
 
       <p className="mt-4 text-sm text-neutral-600">
         ماعندكش حساب؟{" "}
-        <Link href="/signup" className="font-medium text-neutral-900 underline">
+        <Link href="/signup" className="font-medium text-ink underline">
           إنشاء حساب
         </Link>
       </p>
